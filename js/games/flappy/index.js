@@ -5,6 +5,24 @@ import { getBestScore, saveBestScore } from "../../core/storage.js"
 const canvas = getCanvas();
 const ctx = getContext();
 
+let spriteAtlas = null;
+let imagesLoaded = false;
+
+const SPRITES = {
+  background: { x: 2, y: 11, width: 237, height: 419 },
+  pipe: { x: 2, y: 537, width: 182, height: 264 },
+  bird: [
+    { x: 147, y: 811, width: 34, height: 24 },
+    { x: 96, y: 811, width: 36, height: 23 },
+    { x: 193, y: 631, width: 33, height: 24 },
+  ],
+};
+
+let birdFrame = 0;
+let frameTimer = 0;
+const FRAME_DURATION = 100;
+const BIRD_FRAMES = 3;
+
 let bird = {}
 let pipes = [];
 let score = 0;
@@ -18,6 +36,23 @@ const PIPE_WIDTH = 60;
 const PIPE_GAP = 180;
 const PIPE_SPEED = 0.15;
 const BIRD_SIZE = 30;
+
+function loadSprites() {
+    return new Promise((resolve) => {
+        spriteAtlas = new Image();
+        spriteAtlas.onload = () => {
+            imagesLoaded = true;
+            console.log("Sprite atlas loaded successfully!");
+            resolve();
+        };
+        spriteAtlas.onerror = () => {
+            console.log("Sprite atlas not found, using fallback rendering");
+            imagesLoaded = false;
+            resolve();
+        };
+        spriteAtlas.src = "./js/games/flappy/assets/flappy-bird-atlas.png";
+    });
+}
 
 function resetGame() {
     bird = {
@@ -133,17 +168,62 @@ export default {
     },
 
     render() {
-        ctx.fillStyle = "#FFD700";
-        ctx.beginPath();
-        ctx.arc(bird.x, bird.y, bird.radius, 0, Math.PI * 2);
-        ctx.fill();
 
-        ctx.fillStyle = "#000";
-        ctx.beginPath();
-        ctx.arc(bird.x + 8, bird.y - 5, 3, 0, Math.PI * 2);
-        ctx.fill();
+        if (spriteAtlas && imagesLoaded) {
+            const bg = SPRITES.background;
 
-        ctx.fillStyle = "#2ECC40";
+            ctx.drawImage(
+                spriteAtlas,
+                bg.x,
+                bg.y,
+                bg.width,
+                bg.height,
+                0,
+                0,
+                canvas.width,
+                canvas.height,
+            );
+        } else {
+            const gradient = ctx.createLinearGradient (0, 0, 0, canvas.height);
+            gradient.addColorStop(0, "#4EC0CA");
+            gradient.addColorStop(0, "#9BE8F5");
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+
+        if (spriteAtlas && imagesLoaded) {
+            const pipeSprite = SPRITES.pipe;
+            for (let pipe of pipes) {
+                ctx.save();
+                ctx.translate(pipe.x + PIPE_WIDTH / 2, pipe.topHeight);
+                ctx.scale(1, -1);
+                ctx.drawImage(
+                    spriteAtlas,
+                    pipeSprite.x,
+                    pipeSprite.y,
+                    pipeSprite.width,
+                    pipeSprite.height,
+                     -PIPE_WIDTH / 2,
+                    0,
+                    PIPE_WIDTH,
+                    pipe.topHeight,
+
+                );
+                ctx.restore();
+                
+                ctx.drawImage(
+                    spriteAtlas,
+                    pipeSprite.x,
+                    pipeSprite.y,
+                    pipeSprite.width,
+                    pipeSprite.height,
+                    pipe.x,
+                    pipe.bottomY,
+                    PIPE_WIDTH,
+                    canvas.height - pipe.bottomY,
+                );
+            }
+        } else {ctx.fillStyle = "#2ECC40";
         for (let pipe of pipes) {
             ctx.fillRect(pipe.x, 0, PIPE_WIDTH, pipe.topHeight);
             ctx.fillRect(
@@ -158,8 +238,42 @@ export default {
             ctx.fillRect(pipe.x - 5,pipe.bottomY, PIPE_WIDTH + 10, 20);
             ctx.fillStyle = "#27A834";
         }
+    }
+        if (spriteAtlas && imagesLoaded) {
+            const birdSprite = SPRITES.bird[birdFrame];
+            ctx.save();
+            ctx.translate(bird.x, bird.y);
+            const rotation = Math.min(Math.max(bird.velocity * 0.3, -0.5), 0.5);
+            ctx.rotate(rotation);
+
+            ctx.drawImage(
+                spriteAtlas,
+                birdSprite.x,
+                birdSprite.y,
+                birdSprite.width,
+                birdSprite.height,
+                 -BIRD_SIZE / 2,
+                 -BIRD_SIZE / 2,
+                BIRD_SIZE,
+                BIRD_SIZE,
+            );
+
+            ctx.restore();
+        } else {
+            ctx.fillStyle = "#FFD700"
+            ctx.beginPath();
+            ctx.arc(bird.x, bird.y, bird.radius, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.fillStyle = "#000";
+            ctx.beginPath();
+            ctx.arc(bird.x + 8, bird.y - 5, 3, 0, Math.PI * 2);
+            ctx.fill();
+        }
 
         ctx.fillStyle = "#fff";
+        ctx.strokeStyle = "#000";
+        ctx.lineWidth = 3;
         ctx.font = "36px Arial";
         ctx.textAlign = "center";
         ctx.fillText(score, canvas.width / 2, 50);
