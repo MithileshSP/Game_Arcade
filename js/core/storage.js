@@ -26,7 +26,7 @@ export function getBestScore(gameId) {
 
 }
 
-export function savesBestScore(gameId,score) {
+export function saveBestScore(gameId,score) {
     const data = getData();
 
     if(!data[gameId]) {
