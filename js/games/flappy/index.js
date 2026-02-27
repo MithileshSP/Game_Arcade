@@ -33,6 +33,7 @@ const GRAVITY = 0.5;
 const JUMP_STRENGTH = -7.6;
 
 let pipes = [];
+let pipeseparation = 0;
 const JUMP_FORCE = -0.4;
 const PIPE_WIDTH = 60;
 const PIPE_GAP = 180;
@@ -126,7 +127,7 @@ function createPipe() {
     });
 }
 
-function checkCollision() {
+function checkCollision(pipe) {
     return (
         bird.x < pipe.x + pipe.width &&
         bird.x + bird.width > pipe.x &&
@@ -220,7 +221,7 @@ export default {
         } else {
             const gradient = ctx.createLinearGradient (0, 0, 0, canvas.height);
             gradient.addColorStop(0, "#4EC0CA");
-            gradient.addColorStop(0, "#9BE8F5");
+            gradient.addColorStop(1, "#9BE8F5");
             ctx.fillStyle = gradient;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
         }
@@ -235,7 +236,7 @@ export default {
 
             if (pipe.y === 0){
                 ctx.fillStyle = "#27A834";
-                ctx.fillRect(pipe.x - 5, pipe.topHeight - 30, pipe.width + 10, 30);
+                ctx.fillRect(pipe.x - 5, pipe.height - 30, pipe.width + 10, 30);
                 ctx.strokeRect(pipe.x - 5, pipe.height - 30, pipe.width + 10, 30);
             } else {
                 ctx.fillStyle = "#27A834";

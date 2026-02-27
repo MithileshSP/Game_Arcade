@@ -7,14 +7,52 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1 id = "title">Game Arcade</h1>
-    <div id="launcher">
+    <div class="app-shell">
+        <header class = "topbar">
+            <div class = "topbar-inner">
+                <div class="brand">
+                    <i class="fas fa-gamepad"></i>
+                    <span>Game Arcade</span>
+                </div>
+            </div>
+        </header>
 
+        <main class="main">
+            <section id="lobby" class="lobby">
+                <section class="hero">
+                    <div class="hero-card">
+                        <div class="hero-text">
+                            <p class="hero-kicker">Welcome to the Game Arcade</p>
+                            <h1 class="hero-tile">Browse our popular games here </h1>
+                            <button id="browse-btn" class="primary-btn">Browse Now</button>
+                        </div>
+                        <div class="hero-art" aria-hidden="true">
+                            <div class="hero-icon">
+                                <i class="fas fa-ghost"></i>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section" id="games">
+                    <h2 class="section-title"><span class="section-title-accent">Most Popular</span> Right Now</h2>
+                    <div id="launcher" class="games-grid"></div>
+                </section>
+            </section>
+            <section class = "game-view">
+                <div class="game-header">
+                    <button id="back-btn" class="back-btn">
+                        <i class="fas fa-arrow-left"></i>Back to Lobby
+                    </button>
+                    <h2 id="game-title">Game</h2>
+                    <div></div>
+                </div>
+                <canvas id="gameCanvas" width="800" height="500"></canvas>
+            </section>
+        </main>
     </div>
-    <canvas id="gameCanvas" width="800" height="500"></canvas>
-
+    <div id="esc-hint">Press <kdb>ESC</kdb> to return to menu</div>
+   
     <script type="module" src="js/main.js"></script>
-
-
 </body>
 </html>
