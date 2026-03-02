@@ -158,7 +158,117 @@ body::before {
     color: #ffd700;
 }
 
+.games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 480px));
+    gap: 30px;
+    padding: 10px 0 40px;
+    width: 100%;
+    align-content: start;
+    justify-content: center;
+    animation: fadeIn 1s ease-out;
+}
+
+.game-card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.1),
+        rgba(255, 255, 255, 0.05)
+    );
+    border-radius: 20px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 2px solid rgba(225, 215, 0, 0.3);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+
+.game-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        135deg, rgba(255, 107, 107, 0.1),
+        rgba(78, 205, 196, 0.1)
+    );
+    opacity: 0;
+    transition: opacity 0.4s;
+}
+
+.game-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    border-color: #ffd700;
+    box-shadow: 
+    0 20px 50px rgba(255, 215, 0, 0.4),
+    0 0 30px rgba(225, 215, 0, 0.3);
+}
+
+.game-card:hover::before {
+    opacity: 1;
+}
+
+.game-thumbnail {
+    height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.game-thumbnail i {
+    font-size: 100px;
+    color: rgba(255, 255, 255, 0.9);
+    transition: transform 0.4s;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));
+}
+
+.game-card:hover .game-thumbnail i {
+    transform: scale(1.2) rotate(5deg);
+}
+
+.game-info {
+    padding: 25px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.game-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #ffd700;
+}
+
+.game-category {
+    display: inline-block;
+    background: rgba(225, 215, 0, 0.2);
+    color: #ffd700;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+}
+
+.game-description {
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
 .play-btn {
+    margin-top: auto;
     width: 100%;
     padding: 15px;
     background: linear-gradient(135deg, #ff6b6b, #ffd700);
@@ -177,7 +287,6 @@ body::before {
     transform: scale(1.05);
     box-shadow: 0 5px 20px rgba(255, 215, 0, 0.5);
 }
-
 .game-view {
     display: none;
     animation: fadeIn 0.5s ease-out;
