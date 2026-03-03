@@ -412,12 +412,18 @@ canvas {
 }
 
 @media (max-width: 768px) {
-    .games-grid {
+    .hero-card {
         grid-template-columns: 1fr;
+        padding: 22px;
     }
 
-    #title {
-        font-size: 36px;
+    .hero-title {
+        font-size: 30px;
+    }
+
+    .games-grid {
+        grid-template-columns: 1fr;
+        justify-content: stretch;
     }
 
     .game-header {
