@@ -33,7 +33,7 @@ const GRAVITY = 0.5;
 const JUMP_STRENGTH = -7.6;
 
 let pipes = [];
-let pipeseparation = 0;
+let pipeSeparation = 0;
 const JUMP_FORCE = -0.4;
 const PIPE_WIDTH = 60;
 const PIPE_GAP = 180;
@@ -219,7 +219,7 @@ export default {
         if (imagesLoaded && bgImage) {
             ctx.drawImage(bgImage, 0, 0, canvas.width, canvas.height);
         } else {
-            const gradient = ctx.createLinearGradient (0, 0, 0, canvas.height);
+            const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
             gradient.addColorStop(0, "#4EC0CA");
             gradient.addColorStop(1, "#9BE8F5");
             ctx.fillStyle = gradient;
@@ -236,7 +236,7 @@ export default {
 
             if (pipe.y === 0){
                 ctx.fillStyle = "#27A834";
-                ctx.fillRect(pipe.x - 5, pipe.height - 30, pipe.width + 10, 30);
+                ctx.fillRect(pipe.x - 5, pipe.topHeight - 30, pipe.width + 10, 30);
                 ctx.strokeRect(pipe.x - 5, pipe.height - 30, pipe.width + 10, 30);
             } else {
                 ctx.fillStyle = "#27A834";
