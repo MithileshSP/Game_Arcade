@@ -70,32 +70,6 @@ Independent game logic
 
 Plug-and-play architecture
 
-📂 Project Structure
-GAME_ARCADE
-│
-├── index.html
-├── style.css
-│
-├── js
-│   ├── main.js
-│   ├── core
-│   │   ├── engine.js
-│   │   ├── canvas.js
-│   │   ├── input.js
-│   │   ├── storage.js
-│   │   ├── router.js
-│   │   └── assets.js
-│   │
-│   └── games
-│       ├── register.js
-│       ├── flappy
-│       │   ├── assets
-│       │   └── index.js
-│       │
-│       └── memory
-│           ├── assets
-│           └── index.js
-
 Each game follows a standard interface:
 
 init()
