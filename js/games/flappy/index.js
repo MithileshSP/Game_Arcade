@@ -17,6 +17,7 @@ let imagesLoaded = false;
 let gameState = "Start";
 let score = 0;
 let bestScore = 0;
+let isNewBest = false;
 
 
 let bird = {
@@ -145,7 +146,7 @@ function updateDifficulty() {
 
 function createPipe() {
     const minHeight = 80;
-    const maxHeight = canvas.height - PIPE_GAP - 80;
+    const maxHeight = canvas.height - currentGap - 80;
     const topHeight = minHeight + Math.random() * (maxHeight - minHeight);
 
     pipes.push({
@@ -321,7 +322,7 @@ export default {
             ctx.strokeRect(pipe.x, pipe.y, pipe.width, pipe.height);
             ctx.fillStyle = "#27A834";
             if (pipe.y === 0){
-                ctx.fillRect(pipe.x - 5, pipe.topHeight - 30, pipe.width + 10, 30);
+                ctx.fillRect(pipe.x - 5, pipe.height - 30, pipe.width + 10, 30);
                 ctx.strokeRect(pipe.x - 5, pipe.height - 30, pipe.width + 10, 30);
             } else {
                 ctx.fillRect(pipe.x - 5,pipe.y, pipe.width + 10, 30);
@@ -329,7 +330,7 @@ export default {
             }
         }
 
-        for (const p of pipes) {
+        for (const p of particles) {
             ctx.globalAlpha = p.alpha;
             ctx.fillStyle = p.color;
             ctx.beginPath();

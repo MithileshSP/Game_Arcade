@@ -16,6 +16,12 @@ body {
     overflow-x: hidden;
 }
 
+body.game-active {
+    overflow: hidden;
+    height: 100vh;
+    overscroll-behavior: none;
+}
+
 body::before {
     content:none;
 }
@@ -294,6 +300,20 @@ body::before {
     animation: fadeIn 0.5s ease-out;
 }
 
+.game-view:fullscreen {
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    padding: 20px 22px;
+}
+
+.game-view:-webkit-full-screen {
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    padding: 20px 22px;
+}
+
 .game-header {
     display: flex;
     align-items: center;
@@ -338,6 +358,7 @@ canvas {
     box-shadow: 0 10px 50px rgba(225, 215, 0, 0.3);
     max-width: 100%;
     height: auto;
+    touch-action: none;
 }
 
 #esc-hint {

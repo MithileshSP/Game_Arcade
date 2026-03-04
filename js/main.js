@@ -32,12 +32,27 @@ function showLauncher() {
     launcher.style.display = "grid";
     gameView.style.display = "none";
     escHint.style.display = "none";
+    document.body.classList.remove("game-active");
+
+    if (document.fullscreenElement) {
+        document.exitFullscreen().catch(() => {});
+    }
 }
 
 function showGameView() {
+    lobby.style.display = "none";
     launcher.style.display = "none";
     gameView.style.display = "block";
-    escHint.style.display ="block"
+    escHint.style.display ="block";
+    document.body.classList.add("game-active");
+
+    if (!document.fullscreenElement && gameView?.requestFullscreen) {
+        gameView.requestFullscreen().catch(() => {});
+    }
+}
+
+function isGameActive() {
+    return document.body.classList.contains("game-active");
 }
 
 if (browseBtn) {
@@ -90,7 +105,21 @@ backBtn.addEventListener("click", () => {
 });
 
 window.addEventListener("keydown", (e) => {
+    if (isGameActive()) {
+        const scrollKeys = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Space", "PageUp", "PageDown", "Home", "End"];
+        if (scrollKeys.includes(e.code)) {
+            e.preventDefault();
+        }
+    }
+
     if (e.key === "Escape") {
+        stop();
+        showLauncher();
+    }
+}, { passive: false });
+
+document.addEventListener("fullscreenchange", () => {
+    if (isGameActive() && !document.fullscreenElement) {
         stop();
         showLauncher();
     }
