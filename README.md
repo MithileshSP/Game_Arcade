@@ -99,20 +99,11 @@ Clean separation of concerns
 
 Since ES modules are used, the project must be run through a local server.
 
-Option 1 — VS Code
+In VS Code
 
 Use Live Server Extension
 
 Right click index.html → Open with Live Server
-Option 2 — Node
-npx serve .
-Option 3 — Python
-python -m http.server
-
-Then open:
-
-http://localhost:8000
-🌍 Deployment
 
 The project can be deployed easily using static hosting platforms:
 
